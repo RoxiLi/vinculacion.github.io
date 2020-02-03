@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 
 // servicios
 import {PedaleraService} from '../../../../service/pedalera.service';
@@ -36,7 +36,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [TerapiaPedaleraComponent, TerapiaPedaleraCreateUpdateComponent, DialogPedaleraComponent],
-  imports: [MatDatepickerModule,MatNativeDateModule,
+  imports: [
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatInputModule,
     MatTabsModule,
     MatSlideToggleModule,
@@ -64,7 +66,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatButtonToggleModule,
     MatDividerModule
   ],
-  providers: [PedaleraService],
+  providers: [PedaleraService, DatePipe],
   entryComponents: [DialogPedaleraComponent, TerapiaPedaleraCreateUpdateComponent],
   exports: [TerapiaPedaleraCreateUpdateComponent]
 })

@@ -28,6 +28,7 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
 import {TerapiaAvdCreateUpdateComponent} from '../terapia-avd/terapia-avd-create-update/terapia-avd-create-update.component';
 import {CajaAvd} from '../../../../models/cajaAvd.model';
 import {TerapiaPedaleraCreateUpdateComponent} from './terapia-pedalera-create-update/terapia-pedalera-create-update.component';
+import {DialogComponent} from '../terapia-avd/terapia-avd.component';
 
 
 @Component({
@@ -58,8 +59,11 @@ export class TerapiaPedaleraComponent implements OnInit , AfterViewInit, OnDestr
   icFilterList = icFilterList;
   icFolder = icFolder;
   columns: TableColumn<Pedalera>[] = [
-    { label: 'Nombre', property: 'nombre', type: 'text', visible: true },
+    {label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true},
+    { label: 'Codigo de la Persona', property: 'codigo', type: 'text', visible: true },
     { label: 'Pedaleadas', property: 'pedaleadas', type: 'text', visible: true },
+    { label: 'Fecha', property: 'fecha', type: 'text', visible: true },
+    {label: 'Actions', property: 'actions', type: 'button', visible: true}
   ];
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
@@ -137,19 +141,74 @@ export class TerapiaPedaleraComponent implements OnInit , AfterViewInit, OnDestr
      ).afterClosed().subscribe((pedalera: Pedalera) => {
       if (pedalera) {
         if (this.pedaleraService.insertCaja(pedalera)) {
-          this.showNotification('Antecedente creado EXITOSAMENTE', 'OK');
+          this.showNotification('Terapia creado EXITOSAMENTE', 'OK');
         } else {
-          this.showNotification('ERROR al crear el Antecedente', 'CERRAR');
+          this.showNotification('ERROR al crear el Terapia', 'CERRAR');
         }
 
       }
     });
   }
-  updatePedalera(pedalera) {
+  updatePedalera(pedalera: Pedalera) {
+    this.dialog.open(TerapiaAvdCreateUpdateComponent, {
+      data: pedalera
+    }).afterClosed().subscribe(updated => {
+      const id = pedalera.$key;
+      if (updated) {
+        if (this.pedaleraService.updatePedalera(updated, id)) {
+          this.ngOnInit();
+          this.showNotification('Registro actualizado exitosamente', 'Ok');
+        }
+      }
+    });
   }
   ngOnDestroy() {
   }
+  openDialog(listPedalera?: Pedalera[], pedalera?: Pedalera) {
+    let message = 'Estas seguro de eliminar este registro?';
+    if (pedalera) {
+      listPedalera = new Array<Pedalera>();
+      listPedalera.push(pedalera);
+    } else if (listPedalera.length > 1) {
+      message = 'Estas seguro de eliminar ' + listPedalera.length + ' registros?';
+    }
+
+    this.dialog.open(DialogPedaleraComponent, {
+      data: message,
+      disableClose: false,
+      width: '400px'
+    }).afterClosed().subscribe(result => {
+      if (result === 'si') {
+        this.delatePedalera(listPedalera);
+      }
+    });
+  }
+  delatePedalera(pedaleras: Pedalera[]) {
+    const tamaño = pedaleras.length;
+    const promise = new Promise((resolve, reject) => {
+      pedaleras.forEach(pedalera => {
+        const id = pedalera.$key;
+        console.log(id);
+        if (this.pedaleraService.deletePedalera(id)) {
+          this.selection.deselect(pedalera);
+          console.log('dnd')
+          this.dataSource.connect().next(this.pedaleras);
+        }
+      });
+      resolve();
+    });
+    promise.then(() => {
+      this.selection.clear();
+      if (tamaño > 1) {
+        this.showNotification('Registros eliminados exitosamente', 'Ok');
+      } else {
+        this.showNotification('Registro eliminado exitosamente', 'Ok');
+      }
+    });
+  }
 }
+
+
 @Component({
   selector: 'vex-components-dialog',
   template: `

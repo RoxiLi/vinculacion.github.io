@@ -12,33 +12,30 @@ export class CajaAvdService {
   constructor(private firebase: AngularFireDatabase,
               private afs: AngularFirestore){
   }
-  getCajaByPerson() {
-    return  this.cajaLst = this.firebase.list('caja' , ref => ref.orderByChild('nombre').equalTo('eddi'));
+  getCajaByAldaba() {
+    return  this.cajaLst = this.firebase.list('caja' , ref => ref.orderByChild('ejercicio').equalTo('ALDABA'));
   }
   getCajas() {
     return this.cajaLst = this.firebase.list('caja');
   }
   insertCaja(cajaAvd: CajaAvd) {
     return this.cajaLst.push({
-      nombre: cajaAvd.nombre,
-      fecha: cajaAvd.fecha,
-      tiempo: cajaAvd.tiempo,
       ejercicio: cajaAvd.ejercicio,
-      ejercitaciones: cajaAvd.ejercitaciones,
+     ejercitaciones: cajaAvd.ejercitaciones,
+      fecha: cajaAvd.fecha,
+      codigo: cajaAvd.codigo
     });
   }
   updateCaja(cajaAvd: CajaAvd ,  id) {
     console.log(id)
-    return this.cajaLst.update(id,{
-     codigo: cajaAvd.codigo,
-     nombre: cajaAvd.nombre,
+    return this.cajaLst.update(id, {
      ejercicio: cajaAvd.ejercicio,
      ejercitaciones: cajaAvd.ejercitaciones,
-     tiempo: cajaAvd.tiempo ,
-      fecha: cajaAvd.fecha
+      fecha: cajaAvd.fecha,
+      codigo: cajaAvd.codigo
     });
   }
-  deletePerson($Key: string) {
-    this.cajaLst.remove($Key);
+  deleteCaja($Key: string) {
+    return this.cajaLst.remove($Key);
   }
 }

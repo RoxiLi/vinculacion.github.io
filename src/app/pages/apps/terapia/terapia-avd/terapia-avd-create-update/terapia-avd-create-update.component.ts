@@ -53,10 +53,9 @@ export class TerapiaAvdCreateUpdateComponent implements OnInit {
       this.defaults = {} as CajaAvd;
     }
     this.form = this.fb.group({
-      nombre : this.defaults.nombre  || '',
+      codigo: this.defaults.codigo || '',
       ejercicio : this.defaults.ejercicio || '',
       ejercitaciones: this.defaults.ejercitaciones || '',
-      tiempo: this.defaults.tiempo || '',
       fecha: this.defaults.fecha || ''
     });
   }
@@ -92,16 +91,11 @@ export class TerapiaAvdCreateUpdateComponent implements OnInit {
     this.dialogRef.close(this.caja);
   }
   getDatoscaja() {
-    console.log('Auioo');
-    const persona = this.form.get('nombre').value;
-    console.log(persona);
     this.caja = this.form.value;
-    // this.caja.nombre = persona.nombre + ' ' + persona.apellido ;
-    this.caja.codigo = persona.codigo;
     const date =  this.form.get('fecha').value;
     const fecha = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.caja.fecha = fecha;
-  }
+    }
   isCreateMode() {
     return this.mode === 'create';
   }

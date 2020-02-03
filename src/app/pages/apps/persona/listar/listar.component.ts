@@ -60,8 +60,8 @@ export class ListarComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   columns: TableColumn<Persona>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
-    { label: 'Nombre', property: 'nombre', type: 'text', visible: true },
-    { label: 'Apellido', property: 'apellido', type: 'text', visible: true },
+    { label: 'Nombre y Apellido', property: 'nombre', type: 'text', visible: true },
+    { label: 'Cédula', property: 'cedula', type: 'text', visible: true },
     { label: 'Edad', property: 'edad', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
 

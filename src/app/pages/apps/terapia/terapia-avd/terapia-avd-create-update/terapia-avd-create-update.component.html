@@ -2,9 +2,9 @@
   <div class="mb-0 body-1" mat-dialog-title>
 
     <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
-      <h2 *ngIf="form.get('nombre').value" class="headline m-0" fxFlex="auto">
+      <h2 *ngIf="form.get('codigo').value" class="headline m-0" fxFlex="auto">
           ACTUALIZAR </h2>
-      <h2 *ngIf="!form.get('nombre').value" class="headline m-0" fxFlex="auto">
+      <h2 *ngIf="!form.get('codigo').value" class="headline m-0" fxFlex="auto">
         NUEVO </h2>
 
       <button  cdkFocusInitial class="text-secondary" mat-dialog-close mat-icon-button type="button">
@@ -23,19 +23,21 @@
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
       <mat-form-field class="mt-6" fxFlex>
         <mat-label>Nombres y Apellidos</mat-label>
-        <mat-select formControlName="nombre" required>
-          <mat-option  *ngFor=" let resp of personas" [value]="resp.nombre+' '+ resp.apellido">{{resp.nombre}} {{resp.apellido}}</mat-option>
+        <mat-select formControlName="codigo" required>
+          <mat-option  *ngFor=" let resp of personas" [value]="resp.codigo">{{resp.nombre}}</mat-option>
           </mat-select>
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
 
     </div>
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+
       <mat-form-field fxFlex="auto">
         <mat-label>Fecha de Registro</mat-label>
-        <input required formControlName="fecha" matInput   [matDatepicker]="datepickerRef" ngModel >
-        <mat-datepicker-toggle [for]="datepickerRef"  matSuffix></mat-datepicker-toggle>
+        <input formControlName="fecha" matInput (click)="datepickerRef.open()" (focus)="datepickerRef.open()" [matDatepicker]="datepickerRef">
+        <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #datepickerRef></mat-datepicker>
+        <mat-hint>Haga click en el icono de la derecha</mat-hint>
       </mat-form-field>
 
     </div>
@@ -44,21 +46,6 @@
         <mat-label>Ejercitaciones</mat-label>
         <input cdkFocusInitial formControlName="ejercitaciones"   type="number" matInput required>
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-      <mat-form-field class="mt-6" fxFlex >
-        <mat-label>Tiempo (min)</mat-label>
-        <input required
-          cdkFocusInitial
-          type="number"
-          formControlName="tiempo"
-
-          matInput
-        />
-        <mat-icon
-          [icIcon]="icPerson"
-          class="mr-3"
-          matPrefix
-        ></mat-icon>
       </mat-form-field>
 
       <mat-form-field class="mt-6" fxFlex>

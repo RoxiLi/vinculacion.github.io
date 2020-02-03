@@ -23,9 +23,11 @@ import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/bread
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
 import {WidgetGraficoPedaleraModule} from './widget-grafico-pedalera/widget-grafico-pedalera.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {WidgetQuickLineChartModule} from '../../../../@vex/components/widgets/widget-quick-line-chart/widget-quick-line-chart.module';
 @NgModule({
   declarations: [ProfileComponent, GraficaPedaleraComponent],
   imports: [
+    WidgetQuickLineChartModule,
     BreadcrumbsModule,
     ReactiveFormsModule,
     ContainerModule,

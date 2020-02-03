@@ -7,7 +7,7 @@ import { ShareBottomSheetComponent } from '../../share-bottom-sheet/share-bottom
 import icShare from '@iconify/icons-ic/twotone-share';
 import { scaleInOutAnimation } from '../../../animations/scale-in-out.animation';
 import { ColorDef } from '../../../utils/tailwindcss.interface';
-
+import chart_line from '@iconify/icons-fa-solid/chart-line';
 @Component({
   selector: 'vex-widget-quick-line-chart',
   templateUrl: './widget-quick-line-chart.component.html',

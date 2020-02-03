@@ -10,7 +10,8 @@ import { ContainerModule } from '../../../../../@vex/directives/container/contai
 import { MatSelectModule } from '@angular/material/select';
 import { ColorFadeModule } from '../../../../../@vex/pipes/color/color-fade.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {DialogCajaComponent, TerapiaAvdComponent} from './terapia-avd.component';
+import { TerapiaAvdComponent} from './terapia-avd.component';
+import {DialogComponent} from './terapia-avd.component';
 import {TerapiaAvdRoutingModule} from './terapia-avd-routing.module';
 import { TerapiaAvdCreateUpdateComponent } from './terapia-avd-create-update/terapia-avd-create-update.component';
 import {IconModule} from '@visurel/iconify-angular';
@@ -36,7 +37,7 @@ import {BreadcrumbsModule} from '../../../../../@vex/components/breadcrumbs/brea
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
-  declarations: [TerapiaAvdComponent, DialogCajaComponent, TerapiaAvdCreateUpdateComponent],
+  declarations: [TerapiaAvdComponent, DialogComponent, TerapiaAvdCreateUpdateComponent],
   imports: [
     MatNativeDateModule,
     MatDatepickerModule,
@@ -69,7 +70,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDividerModule,
   ],
   providers: [PedaleraService, DatePipe],
-  entryComponents: [DialogCajaComponent, TerapiaAvdCreateUpdateComponent],
+  entryComponents: [DialogComponent, TerapiaAvdCreateUpdateComponent],
   exports: [TerapiaAvdCreateUpdateComponent]
 })
 export class TerapiaAvdModule  {

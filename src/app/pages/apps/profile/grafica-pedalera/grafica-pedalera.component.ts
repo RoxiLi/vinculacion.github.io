@@ -8,7 +8,10 @@ import { Order, tableSalesData } from '../../../../../static-data/table-sales-da
 import { TableColumn } from '../../../../../@vex/interfaces/table-column.interface';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import theme from '../../../../../@vex/utils/tailwindcss';
-
+import chart_line from '@iconify/icons-fa-solid/chart-line';
+import {CajaAvdService} from '../../../../service/cajaAvd.service';
+import {CajaAvd} from '../../../../models/cajaAvd.model';
+import {Persona} from '../../../../models/persona.model';
 
 @Component({
   selector: 'vex-grafica-pedalera',
@@ -51,17 +54,36 @@ export class GraficaPedaleraComponent implements OnInit {
       data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
     },
   ];
+  pageViewsSeries: ApexAxisChartSeries = [{
+    name: 'Repeticiones',
+    data: [405, 800, 200, 600, 105, 788, 600, 204]
+  }];
+
+  uniqueUsersSeries: ApexAxisChartSeries = [{
+    name: 'Repeticiones',
+    data: [356, 806, 600, 754, 432, 854, 555, 1004]
+  }];
+  uniqueUsersOptions = defaultChartOptions({
+    chart: {
+      type: 'area',
+      height: 100
+    },
+    colors: ['#ff9800']
+  });
 
   icGroup = icGroup;
   icPageView = icPageView;
   icCloudOff = icCloudOff;
   icTimer = icTimer;
   icMoreVert = icMoreVert;
-
+  chart_line = chart_line;
+  cajaByAldaba: CajaAvd[];
   theme = theme;
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef,
+              private cajaService: CajaAvdService) { }
 
   ngOnInit() {
+    this.getAldabas();
     setTimeout(() => {
       const temp = [
         {
@@ -73,6 +95,13 @@ export class GraficaPedaleraComponent implements OnInit {
         }
       ];
     }, 3000);
+  }
+  getAldabas() {
+    this.cajaService.getCajaByAldaba().valueChanges().subscribe( value => {
+      this.cajaByAldaba = value;
+      console.log('miraaa');
+      console.log(this.cajaByAldaba);
+    });
   }
 
 }

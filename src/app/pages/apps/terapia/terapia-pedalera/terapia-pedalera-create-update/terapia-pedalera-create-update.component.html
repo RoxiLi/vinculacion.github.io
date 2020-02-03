@@ -1,21 +1,18 @@
-<form (ngSubmit)="save()" [formGroup]="form">
+<form (ngSubmit)="save()" [formGroup]="form" class="w-auto">
   <div class="mb-0 body-1" mat-dialog-title>
 
     <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
-      <h2 *ngIf="form.get('nombre').value" class="headline m-0" fxFlex="auto">
-        <ic-icon [icon]="icAssignment" class="ltr:mr-1 rtl:ml-1 text-secondary" fxFlex="none" size="24px"></ic-icon>
+      <h2 *ngIf="form.get('codigo').value" class="headline m-0" fxFlex="auto">
         ACTUALIZAR </h2>
-      <h2 *ngIf="!form.get('nombre').value" class="headline m-0" fxFlex="auto">
-        <ic-icon [icon]="icAssignment" class="ltr:mr-1 rtl:ml-1 text-secondary" fxFlex="none" size="24px"></ic-icon>
+      <h2 *ngIf="!form.get('codigo').value" class="headline m-0" fxFlex="auto">
         NUEVO </h2>
 
       <button  cdkFocusInitial class="text-secondary" mat-dialog-close mat-icon-button type="button">
         <mat-icon [icIcon]="icClose"></mat-icon>
       </button>
-      <mat-divider class="-mx-6 mt-6"></mat-divider>
     </div>
   </div>
-
+  <mat-divider class="-mx-6 mt-6"></mat-divider>
   <mat-dialog-content fxLayout="column">
 
     <mat-divider class="-mx-6 text-border"></mat-divider>
@@ -26,33 +23,38 @@
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
       <mat-form-field class="mt-6" fxFlex>
         <mat-label>Nombres y Apellidos</mat-label>
-        <input cdkFocusInitial formControlName="nombre" matInput>
+        <mat-select formControlName="codigo" required>
+          <mat-option  *ngFor=" let resp of personas" [value]="resp.codigo">{{resp.nombre}}</mat-option>
+        </mat-select>
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
 
     </div>
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+
       <mat-form-field fxFlex="auto">
         <mat-label>Fecha de Registro</mat-label>
-        <input formControlName="fecha" matInput   [matDatepicker]="datepickerRef" ngModel >
-        <mat-datepicker-toggle [for]="datepickerRef"  matSuffix></mat-datepicker-toggle>
+        <input formControlName="fecha" matInput (click)="datepickerRef.open()" (focus)="datepickerRef.open()" [matDatepicker]="datepickerRef">
+        <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #datepickerRef></mat-datepicker>
+        <mat-hint>Haga click en el icono de la derecha</mat-hint>
       </mat-form-field>
 
     </div>
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
       <mat-form-field class="mt-6" fxFlex>
         <mat-label>Pedaleadas</mat-label>
-        <input cdkFocusInitial formControlName="pedaleadas" matInput>
+        <input cdkFocusInitial formControlName="pedaleadas"   type="number" matInput required>
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
 
     </div>
   </mat-dialog-content>
+
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">CANCELAR</button>
-    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">CREAR </button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">ACTUALIZAR </button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit" [disabled]="!form.valid">CREAR </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit" [disabled]="!form.valid">ACTUALIZAR </button>
   </mat-dialog-actions>
 </form>
 

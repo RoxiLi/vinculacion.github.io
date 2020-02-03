@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import {MatSlideToggleModule} from '@angular/material';
+import {WidgetQuickLineChartModule} from '../../../../../@vex/components/widgets/widget-quick-line-chart/widget-quick-line-chart.module';
 
 @NgModule({
   declarations: [WidgetGraficoPedaleraComponent],
