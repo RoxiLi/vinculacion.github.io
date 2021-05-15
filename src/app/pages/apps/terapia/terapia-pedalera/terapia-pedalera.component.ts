@@ -102,7 +102,7 @@ export class TerapiaPedaleraComponent implements OnInit , AfterViewInit, OnDestr
       .subscribe(item => {
         this.pedaleras = [];
         item.forEach(element => {
-          let x = element.payload.toJSON();
+          const x = element.payload.toJSON();
           x['$key'] = element.key;
           this.pedaleras.push(x as Pedalera);
           console.log(this.pedaleras);
@@ -191,7 +191,7 @@ export class TerapiaPedaleraComponent implements OnInit , AfterViewInit, OnDestr
         console.log(id);
         if (this.pedaleraService.deletePedalera(id)) {
           this.selection.deselect(pedalera);
-          console.log('dnd')
+          console.log('dnd');
           this.dataSource.connect().next(this.pedaleras);
         }
       });

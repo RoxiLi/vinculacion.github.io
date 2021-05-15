@@ -4,6 +4,7 @@ import {fadeInUp400ms} from '../../../../../@vex/animations/fade-in-up.animation
 import {scaleIn400ms} from '../../../../../@vex/animations/scale-in.animation';
 import {fadeInRight400ms} from '../../../../../@vex/animations/fade-in-right.animation';
 import {ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+// @ts-ignore
 import { SelectionModel } from '@angular/cdk/collections';
 import {Persona} from '../../../../models/persona.model';
 import icEdit from '@iconify/icons-ic/twotone-edit';
@@ -109,9 +110,8 @@ export class ListarComponent implements OnInit, AfterViewInit, OnDestroy {
         this.persons = [];
         item.forEach(element => {
           let x = element.payload.toJSON();
-          x["$key"] = element.key;
+          x['$key'] = element.key;
           this.persons.push(x as Persona);
-          console.log(this.persons);
           this.dataSource.data = this.persons;
         });
       });

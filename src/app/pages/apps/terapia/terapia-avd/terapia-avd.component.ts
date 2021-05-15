@@ -110,7 +110,7 @@ export class TerapiaAvdComponent implements OnInit , AfterViewInit, OnDestroy {
         this.cajasAvd = [];
         item.forEach(element => {
           const x = element.payload.toJSON();
-          x["$key"]  = element.key;
+          x['$key']  = element.key;
           this.cajasAvd.push(x as CajaAvd);
           console.log(this.cajasAvd);
           this.dataSource.data = this.cajasAvd;
@@ -212,7 +212,7 @@ export class TerapiaAvdComponent implements OnInit , AfterViewInit, OnDestroy {
           this.dataSource.connect().next(this.cajasAvd);
         }
       });
-      resolve();
+      void resolve();
     });
     promise.then(() => {
       this.selection.clear();
