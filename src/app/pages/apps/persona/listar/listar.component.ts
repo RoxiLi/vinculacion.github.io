@@ -29,6 +29,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import {PersonaCreateUpdateComponent} from './persona-create-update/persona-create-update.component';
+import {DialogPedaleraComponent} from '../../terapia/terapia-pedalera/terapia-pedalera.component';
 
 
 @Component({
@@ -156,8 +157,48 @@ export class ListarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   updatePersona(persona) {
   }
+  openDialog(listpersona?: Persona[], persona?: Persona) {
+    let message = 'Estas seguro de eliminar este registro?';
+    if (persona) {
+      listpersona = new Array<Persona>();
+      listpersona.push(persona);
+    } else if (listpersona.length > 1) {
+      message = 'Estas seguro de eliminar ' + listpersona.length + ' registros?';
+    }
+
+    this.dialog.open(DialogPedaleraComponent, {
+      data: message,
+      disableClose: false,
+      width: '400px'
+    }).afterClosed().subscribe(result => {
+      if (result === 'si') {
+        this.delatePersona(listpersona);
+      }
+    });
+  }
+  delatePersona(personas: Persona[]) {
+    const tamaño = personas.length;
+    const promise = new Promise((resolve, reject) => {
+      personas.forEach(persona => {
+        const id = persona.$key;
+        if (this.personService.deletePerson(id)) {
+          this.selection.deselect(persona);
+          this.dataSource.connect().next(this.persons);
+        }
+      });
+      resolve();
+    });
+    promise.then(() => {
+      this.selection.clear();
+      if (tamaño > 1) {
+        this.showNotification('Registros eliminados exitosamente', 'Ok');
+      } else {
+        this.showNotification('Registro eliminado exitosamente', 'Ok');
+      }
+    });
+  }
   openPersona(persona) {
-    console.log(persona);
+
     this.personaGlobal.savePersonaInstance(persona);
     this.router.navigate(['apps/profile']);
     this.snackbar.open('Continuará el archivo del paciente', 'Información', {

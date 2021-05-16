@@ -82,6 +82,6 @@ export class PersonaService {
     });
   }
   deletePerson($Key: string) {
-    this.personaList.remove($Key);
+    return this.personaList.remove($Key);
   }
 }
