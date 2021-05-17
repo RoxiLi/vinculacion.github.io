@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  configFirebase:{
+ configFirebase: {
     apiKey: 'AIzaSyDFGLZ3Ds1NlJ6PSHR3I1jvsw3imqlexZQ',
     authDomain: 'vinculacion-app.firebaseapp.com',
     databaseURL: 'https://vinculacion-app.firebaseio.com',

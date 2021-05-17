@@ -18,13 +18,6 @@ const childrenRoutes: VexRoutes = [
     path: 'apps',
     children: [
       {
-        path: 'chat',
-        loadChildren: () => import('./pages/apps/chat/chat.module').then(m => m.ChatModule),
-        data: {
-          toolbarShadowEnabled: true
-        }
-      },
-      {
         path: 'personas',
         loadChildren: () => import('./pages/apps/persona/persona.module').then(m => m.PersonaModule)
       },
@@ -34,31 +27,8 @@ const childrenRoutes: VexRoutes = [
       },
 
       {
-        path: 'contacts',
-        loadChildren: () => import('./pages/apps/contacts/contacts.module').then(m => m.ContactsModule)
-      },
-      {
-        path: 'calendar',
-        loadChildren: () => import('./pages/apps/calendar/calendar.module').then(m => m.CalendarModule),
-        data: {
-          toolbarShadowEnabled: true
-        }
-      },
-      {
-        path: 'aio-table',
-        loadChildren: () => import('./pages/apps/aio-table/aio-table.module').then(m => m.AioTableModule),
-      },
-      {
-        path: 'help-center',
-        loadChildren: () => import('./pages/apps/help-center/help-center.module').then(m => m.HelpCenterModule),
-      },
-      {
         path: 'terapia',
         loadChildren: () => import('./pages/apps/terapia/terapia.module').then(m => m.TerapiaModule),
-      },
-      {
-        path: 'editor',
-        loadChildren: () => import('./pages/apps/editor/editor.module').then(m => m.EditorModule),
       },
     ]
   },
@@ -66,24 +36,8 @@ const childrenRoutes: VexRoutes = [
     path: 'pages',
     children: [
       {
-        path: 'pricing',
-        loadChildren: () => import('./pages/pages/pricing/pricing.module').then(m => m.PricingModule)
-      },
-      {
-        path: 'faq',
-        loadChildren: () => import('./pages/pages/faq/faq.module').then(m => m.FaqModule)
-      },
-      {
-        path: 'guides',
-        loadChildren: () => import('./pages/pages/guides/guides.module').then(m => m.GuidesModule)
-      },
-      {
         path: 'profile',
         loadChildren: () => import('./pages/pages/profile/profile.module').then(m => m.ProfileModule)
-      },
-      {
-        path: 'invoice',
-        loadChildren: () => import('./pages/pages/invoice/invoice.module').then(m => m.InvoiceModule)
       },
       {
         path: 'error-404',
@@ -127,10 +81,6 @@ const childrenRoutes: VexRoutes = [
     ]
   },
   {
-    path: 'documentation',
-    loadChildren: () => import('./pages/documentation/documentation.module').then(m => m.DocumentationModule),
-  },
-  {
     path: '**',
     loadChildren: () => import('./pages/pages/errors/error-404/error-404.module').then(m => m.Error404Module)
   }
@@ -148,10 +98,6 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     loadChildren: () => import('./pages/pages/auth/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule),
-  },
-  {
-    path: 'coming-soon',
-    loadChildren: () => import('./pages/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
   },
   {
     path: '',
