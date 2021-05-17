@@ -29,6 +29,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import {PersonaCreateUpdateComponent} from './persona-create-update/persona-create-update.component';
+import {Pedalera} from '../../../../models/pedalera.model';
+import {DialogPedaleraComponent} from '../../terapia/terapia-pedalera/terapia-pedalera.component';
 
 
 @Component({
@@ -156,6 +158,7 @@ export class ListarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   updatePersona(persona) {
   }
+
   openPersona(persona) {
     console.log(persona);
     this.personaGlobal.savePersonaInstance(persona);
@@ -166,6 +169,48 @@ export class ListarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy() {
   }
+  openDialog(listPersona?: Persona[], persona?: Persona) {
+    let message = 'Estas seguro de eliminar este registro?';
+    if (persona) {
+      listPersona = new Array<Persona>();
+      listPersona.push(persona);
+    } else if (listPersona.length > 1) {
+      message = 'Estas seguro de eliminar ' + listPersona.length + ' registros?';
+    }
+
+    this.dialog.open(DialogPedaleraComponent, {
+      data: message,
+      disableClose: false,
+      width: '400px'
+    }).afterClosed().subscribe(result => {
+      if (result === 'si') {
+        this.delatePersona(listPersona);
+      }
+    });
+  }
+  delatePersona(personas: Persona[]) {
+    const tamaño = personas.length;
+    const promise = new Promise((resolve, reject) => {
+      personas.forEach(persona => {
+        const id = persona.$key;
+        if (this.personService.deletePerson(id)) {
+          this.selection.deselect(persona);
+          console.log('dnd');
+          this.dataSource.connect().next(this.persons);
+        }
+      });
+      resolve();
+    });
+    promise.then(() => {
+      this.selection.clear();
+      if (tamaño > 1) {
+        this.showNotification('Registros eliminados exitosamente', 'Ok');
+      } else {
+        this.showNotification('Registro eliminado exitosamente', 'Ok');
+      }
+    });
+  }
+
 
 }
 
